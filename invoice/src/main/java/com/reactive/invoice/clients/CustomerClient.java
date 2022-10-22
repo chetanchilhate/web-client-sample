@@ -3,6 +3,7 @@ package com.reactive.invoice.clients;
 import com.reactive.invoice.dto.Customer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Component
 public class CustomerClient {
@@ -15,13 +16,12 @@ public class CustomerClient {
     this.webClient = webClient;
   }
 
-  public Customer getCustomerById(String id) {
+  public Mono<Customer> getCustomerById(String id) {
 
     return webClient.get()
         .uri(CUSTOMER_URI + id)
         .retrieve()
-        .bodyToMono(Customer.class)
-        .block();
+        .bodyToMono(Customer.class);
   }
 
 }

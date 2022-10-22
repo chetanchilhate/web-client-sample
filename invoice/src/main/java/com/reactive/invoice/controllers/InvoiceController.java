@@ -30,7 +30,7 @@ public class InvoiceController {
   }
 
   @GetMapping("/{id}")
-  Invoice getInvoiceById(@PathVariable("id") String id) {
+  Mono<Invoice> getInvoiceById(@PathVariable("id") String id) {
     return invoiceService.getInvoiceById(id);
   }
 
