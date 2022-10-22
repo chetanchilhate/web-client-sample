@@ -1,16 +1,25 @@
 package com.reactive.invoice.clients;
 
+import static com.reactive.invoice.clients.util.ClientUtil.ECOM_API_URL;
+
+import com.reactive.invoice.clients.util.ClientUtil;
 import com.reactive.invoice.dto.Customer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Component
 public class CustomerClient {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(CustomerClient.class);
+
   private final WebClient webClient;
 
-  private static final String CUSTOMER_URI = "http://localhost:9090/api/v1/customers/";
+  private static final String CUSTOMER_URI = ECOM_API_URL + "/v1/customers/";
 
   public CustomerClient(WebClient webClient) {
     this.webClient = webClient;
@@ -21,7 +30,13 @@ public class CustomerClient {
     return webClient.get()
         .uri(CUSTOMER_URI + id)
         .retrieve()
+        .onStatus(HttpStatus::is4xxClientError, this::handleClientError)
+        .onStatus(HttpStatus::is5xxServerError, this::handleClientError)
         .bodyToMono(Customer.class);
+  }
+
+  private Mono<? extends Throwable> handleClientError(ClientResponse response) {
+    return ClientUtil.handleError(response, "CUSTOMER_SERVICE_FAILURE client error ", LOGGER);
   }
 
 }

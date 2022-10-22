@@ -1,5 +1,7 @@
 package com.reactive.invoice.clients;
 
+import static com.reactive.invoice.clients.util.ClientUtil.ECOM_API_URL;
+
 import com.reactive.invoice.dto.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -10,7 +12,7 @@ public class OrderClient {
 
   private final WebClient webClient;
 
-  private static final String ORDER_URI = "http://localhost:9090/api/v1/orders/";
+  private static final String ORDER_URI = ECOM_API_URL + "/v1/orders/";
 
   public OrderClient(WebClient webClient) {
     this.webClient = webClient;
