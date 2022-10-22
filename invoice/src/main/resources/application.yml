@@ -1,0 +1,11 @@
+server:
+  port: 8082
+
+# ===============================
+# CLIENT COMMON CONFIG
+# ===============================
+client:
+  connection-timeout: 2000 # milli seconds
+  read-timeout: 2000 # milli seconds
+  response-timeout: 2000 # milli seconds
+  max-in-memory-size: 10 #mega bytes
