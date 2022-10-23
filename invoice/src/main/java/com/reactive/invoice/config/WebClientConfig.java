@@ -3,7 +3,6 @@ package com.reactive.invoice.config;
 import static io.netty.channel.ChannelOption.CONNECT_TIMEOUT_MILLIS;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
-import com.reactive.invoice.clients.config.ClientConfig;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import java.time.Duration;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +29,8 @@ public class WebClientConfig {
     return WebClient.builder()
         .clientConnector(getReactorClientHttpConnector())
         .exchangeStrategies(exchangeStrategies())
+        .filter(WebClientLogger.logRequest())
+        .filter(WebClientLogger.logResponse())
         .build();
   }
 

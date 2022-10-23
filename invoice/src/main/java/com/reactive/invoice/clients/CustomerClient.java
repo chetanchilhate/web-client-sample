@@ -4,8 +4,6 @@ import static com.reactive.invoice.clients.util.ClientUtil.ECOM_API_URL;
 
 import com.reactive.invoice.clients.util.ClientUtil;
 import com.reactive.invoice.dto.Customer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientResponse;
@@ -14,8 +12,6 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class CustomerClient {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(CustomerClient.class);
 
   private final WebClient webClient;
 
@@ -36,7 +32,7 @@ public class CustomerClient {
   }
 
   private Mono<? extends Throwable> handleClientError(ClientResponse response) {
-    return ClientUtil.handleError(response, "CUSTOMER_SERVICE_FAILURE client error ", LOGGER);
+    return ClientUtil.handleError(response, "CUSTOMER_SERVICE_FAILURE client error ");
   }
 
 }

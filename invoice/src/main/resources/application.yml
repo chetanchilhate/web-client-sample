@@ -9,3 +9,12 @@ client:
   read-timeout: 2000 # milli seconds
   response-timeout: 2000 # milli seconds
   max-in-memory-size: 10 #mega bytes
+
+# ===============================
+# LOGGING PROPERTIES
+# ===============================
+logging:
+  level:
+    com:
+      reactive:
+        invoice: INFO

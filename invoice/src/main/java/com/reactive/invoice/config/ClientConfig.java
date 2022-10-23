@@ -1,4 +1,4 @@
-package com.reactive.invoice.clients.config;
+package com.reactive.invoice.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
