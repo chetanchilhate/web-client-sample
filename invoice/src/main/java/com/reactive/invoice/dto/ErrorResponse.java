@@ -8,4 +8,8 @@ public record ErrorResponse(HttpStatus code, String message) {
     return code.value();
   }
 
+  public static ErrorResponse create(HttpStatus code, String message) {
+    return new ErrorResponse(code, message);
+  }
+
 }
