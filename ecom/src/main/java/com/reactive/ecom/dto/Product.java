@@ -1,3 +1,3 @@
 package com.reactive.ecom.dto;
 
-public record Product(String id, String name, double price) {}
+public record Product(int id, String name, double price) {}

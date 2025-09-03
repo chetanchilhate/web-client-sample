@@ -1,29 +1,24 @@
 plugins {
-	id 'org.springframework.boot' version '2.7.5'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'org.springframework.boot' version '3.4.9'
+	id 'io.spring.dependency-management' version '1.1.7'
 	id 'java'
-	id("org.openrewrite.rewrite") version("latest.release")
-}
-
-rewrite {
-	activeRecipe("org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_4")
-	activeRecipe("org.openrewrite.java.migrate.UpgradeToJava21")
-	setExportDatatables(true)
 }
 
 group = 'com.reactive'
 version = 'v1'
-sourceCompatibility = '17'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
 
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	rewrite("org.openrewrite.recipe:rewrite-spring:6.13.0")
-	rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:latest.release"))
-	rewrite("org.openrewrite.recipe:rewrite-migrate-java")
-
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

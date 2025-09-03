@@ -1,3 +1,3 @@
 package com.reactive.ecom.dto;
 
-public record Order(String number, double total) {}
+public record Order(int id, double total) {}

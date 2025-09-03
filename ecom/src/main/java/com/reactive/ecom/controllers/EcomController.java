@@ -27,55 +27,58 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1")
 public class EcomController {
 
-  private static final String ERROR_MSG_5XX = "Gateway Timeout Custom";
   public static final String ERROR_MSG_4XX = "Not Acceptable Custom";
+  private static final String ERROR_MSG_5XX = "Gateway Timeout Custom";
 
   @GetMapping("/customers/{id}")
-  public ResponseEntity<Object> getCustomerById(@PathVariable("id") String id) throws InterruptedException {
-    switch (Integer.parseInt(id) % 8) {
-      case 0:
+  public ResponseEntity<Object> getCustomerById(@PathVariable int id) throws InterruptedException {
+    return switch (id % 8) {
+      case 0 -> {
         Thread.sleep(2000L);
-        return ResponseEntity.ok(new Customer(id, "Vicky", "Mumbai"));
-      case 1:
-      case 2:
-        if (Integer.parseInt(id) % 2 != 0)
-          return ResponseEntity.status(NOT_ACCEPTABLE).body(new ErrorResponse("101", ERROR_MSG_4XX));
-        return ResponseEntity.status(GATEWAY_TIMEOUT).body(new ErrorResponse("102", ERROR_MSG_5XX));
-      default:
-        return ResponseEntity.ok(new Customer(id, "Vicky", "Mumbai"));
-    }
+        yield ResponseEntity.ok(new Customer(id, "Vicky", "Mumbai"));
+      }
+      case 1, 2 -> {
+        if (id % 2 != 0) {
+          yield ResponseEntity.status(NOT_ACCEPTABLE).body(new ErrorResponse(101, ERROR_MSG_4XX));
+        }
+        yield ResponseEntity.status(GATEWAY_TIMEOUT).body(new ErrorResponse(102, ERROR_MSG_5XX));
+      }
+      default -> ResponseEntity.ok(new Customer(id, "Vicky", "Mumbai"));
+    };
   }
 
   @GetMapping("/products/{id}")
-  public ResponseEntity<Object> getProductById(@PathVariable("id") String id) throws InterruptedException {
-    switch (Integer.parseInt(id) % 8) {
-      case 0:
+  public ResponseEntity<Object> getProductById(@PathVariable int id) throws InterruptedException {
+    return switch (id % 8) {
+      case 0 -> {
         Thread.sleep(3000L);
-        return ResponseEntity.ok(new Product(id, "Macbook", 162499));
-      case 3:
-      case 4:
-        if (Integer.parseInt(id) % 2 != 0)
-          return ResponseEntity.status(NOT_ACCEPTABLE).body(new ErrorResponse("103", ERROR_MSG_4XX));
-        return ResponseEntity.status(GATEWAY_TIMEOUT).body(new ErrorResponse("104", ERROR_MSG_5XX));
-      default:
-        return ResponseEntity.ok(new Product(id, "Macbook", 162499));
-    }
+        yield ResponseEntity.ok(new Product(id, "Macbook", 162_499));
+      }
+      case 3, 4 -> {
+        if (id % 2 != 0) {
+          yield ResponseEntity.status(NOT_ACCEPTABLE).body(new ErrorResponse(103, ERROR_MSG_4XX));
+        }
+        yield ResponseEntity.status(GATEWAY_TIMEOUT).body(new ErrorResponse(104, ERROR_MSG_5XX));
+      }
+      default -> ResponseEntity.ok(new Product(id, "Macbook", 162_499));
+    };
   }
 
   @GetMapping("/orders/{id}")
-  public ResponseEntity<Object> getOrderById(@PathVariable("id") String id) throws InterruptedException {
-    switch (Integer.parseInt(id) % 8) {
-      case 0:
+  public ResponseEntity<Object> getOrderById(@PathVariable int id) throws InterruptedException {
+    return switch (id % 8) {
+      case 0 -> {
         Thread.sleep(3000L);
-        return ResponseEntity.ok(new Order(id, 167800));
-      case 5:
-      case 6:
-        if (Integer.parseInt(id) % 2 != 0)
-          return ResponseEntity.status(NOT_ACCEPTABLE).body(new ErrorResponse("105", ERROR_MSG_4XX));
-        return ResponseEntity.status(GATEWAY_TIMEOUT).body(new ErrorResponse("106", ERROR_MSG_5XX));
-      default:
-        return ResponseEntity.ok(new Order(id, 167800));
-    }
+        yield ResponseEntity.ok(new Order(id, 167_800));
+      }
+      case 5, 6 -> {
+        if (id % 2 != 0) {
+          yield ResponseEntity.status(NOT_ACCEPTABLE).body(new ErrorResponse(105, ERROR_MSG_4XX));
+        }
+        yield ResponseEntity.status(GATEWAY_TIMEOUT).body(new ErrorResponse(106, ERROR_MSG_5XX));
+      }
+      default -> ResponseEntity.ok(new Order(id, 167_800));
+    };
   }
 
 }
