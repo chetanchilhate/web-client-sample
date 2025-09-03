@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.reactive.function.client.ClientRequest;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
@@ -35,8 +34,7 @@ public class WebClientLogger {
   }
 
   private static void logStatus(ClientResponse response) {
-    HttpStatus status = response.statusCode();
-    log.debug("Status Code {} ({})", status.value(), status.getReasonPhrase());
+    log.debug("Status Code {})", response.statusCode());
   }
 
   private static Mono<ClientResponse> logBody(ClientResponse response) {

@@ -18,7 +18,7 @@ public class ProductClient {
     this.webClient = webClient;
   }
 
-  public Mono<Product> getProductById(String id) {
+  public Mono<Product> getProductById(int id) {
 
     return webClient.get()
         .uri(PRODUCT_URI + id)

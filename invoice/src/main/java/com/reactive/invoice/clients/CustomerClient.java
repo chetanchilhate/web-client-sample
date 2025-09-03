@@ -4,7 +4,7 @@ import static com.reactive.invoice.clients.util.ClientUtil.ECOM_API_URL;
 
 import com.reactive.invoice.clients.util.ClientUtil;
 import com.reactive.invoice.dto.Customer;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -21,13 +21,13 @@ public class CustomerClient {
     this.webClient = webClient;
   }
 
-  public Mono<Customer> getCustomerById(String id) {
+  public Mono<Customer> getCustomerById(int id) {
 
     return webClient.get()
         .uri(CUSTOMER_URI + id)
         .retrieve()
-        .onStatus(HttpStatus::is4xxClientError, this::handleClientError)
-        .onStatus(HttpStatus::is5xxServerError, this::handleClientError)
+        .onStatus(HttpStatusCode::is4xxClientError, this::handleClientError)
+        .onStatus(HttpStatusCode::is5xxServerError, this::handleClientError)
         .bodyToMono(Customer.class);
   }
 

@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(WebClientResponseException.class)
   public ResponseEntity<ErrorResponse> handleWebClientResponseException(WebClientResponseException ex) {
-    return ResponseEntity.status(ex.getStatusCode()).body(ErrorResponse.create(ex.getStatusCode(), ex.getMessage()));
+    return ResponseEntity.status(ex.getStatusCode()).body(ErrorResponse.create(HttpStatus.valueOf(ex.getStatusCode().value()), ex.getMessage()));
   }
 
 }

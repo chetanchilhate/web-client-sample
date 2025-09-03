@@ -28,7 +28,7 @@ public class InvoiceService {
     this.orderClient = orderClient;
   }
 
-  public Mono<Invoice> getInvoiceById(String id) {
+  public Mono<Invoice> getInvoiceById(int id) {
     Mono<Customer> customer = customerClient.getCustomerById(id);
     Mono<Product> product = productClient.getProductById(id);
     Mono<Order> order = orderClient.getOrderById(id);

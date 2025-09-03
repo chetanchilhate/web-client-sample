@@ -15,7 +15,7 @@ public class ClientUtil {
   public static Mono<Throwable> handleError(ClientResponse response, String message) {
     return response
         .createException()
-        .map(webClientRespException -> new ClientException(message + response.rawStatusCode(), response.rawStatusCode()));
+        .map(webClientRespException -> new ClientException(message + response.statusCode().value(), response.statusCode().value()));
   }
 
 }

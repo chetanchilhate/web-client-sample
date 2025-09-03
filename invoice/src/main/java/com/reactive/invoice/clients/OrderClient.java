@@ -18,7 +18,7 @@ public class OrderClient {
     this.webClient = webClient;
   }
 
-  public Mono<Order> getOrderById(String id) {
+  public Mono<Order> getOrderById(int id) {
 
     return webClient.get()
         .uri(ORDER_URI + id)
