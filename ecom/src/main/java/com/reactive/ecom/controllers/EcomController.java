@@ -7,6 +7,8 @@ import com.reactive.ecom.dto.Customer;
 import com.reactive.ecom.dto.ErrorResponse;
 import com.reactive.ecom.dto.Order;
 import com.reactive.ecom.dto.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,11 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1")
 public class EcomController {
 
-  public static final String ERROR_MSG_4XX = "Not Acceptable Custom";
+  private static final Logger log = LoggerFactory.getLogger(EcomController.class);
+  private static final String ERROR_MSG_4XX = "Not Acceptable Custom";
   private static final String ERROR_MSG_5XX = "Gateway Timeout Custom";
 
   @GetMapping("/customers/{id}")
   public ResponseEntity<Object> getCustomerById(@PathVariable int id) throws InterruptedException {
+    log.trace("Thread: {}", Thread.currentThread());
     return switch (id % 8) {
       case 0 -> {
         Thread.sleep(2000L);

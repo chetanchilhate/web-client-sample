@@ -1,7 +1,8 @@
 plugins {
-	id 'org.springframework.boot' version '3.4.9'
-	id 'io.spring.dependency-management' version '1.1.7'
-	id 'java'
+  id 'java'
+  id 'org.springframework.boot' version '3.5.6'
+  id 'io.spring.dependency-management' version '1.1.7'
+  id 'org.graalvm.buildtools.native' version '0.10.6'
 }
 
 group = 'com.reactive'
@@ -9,10 +10,13 @@ version = 'v1'
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+		languageVersion = JavaLanguageVersion.of(25)
 	}
 }
 
+tasks.named('jar') {
+  enabled = false
+}
 
 repositories {
 	mavenCentral()
@@ -21,8 +25,9 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+  useJUnitPlatform()
 }
